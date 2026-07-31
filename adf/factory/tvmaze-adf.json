@@ -1,0 +1,15 @@
+{
+	"name": "tvmaze-adf",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "7aa2fc74-f4fb-4fb4-bb3f-e24955312b11",
+		"tenantId": "4386d579-daee-4f50-9e49-362ea44c147a"
+	}
+}
