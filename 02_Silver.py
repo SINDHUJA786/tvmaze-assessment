@@ -7,7 +7,6 @@
 
 # COMMAND ----------
 
-# DBTITLE 1,Cell 3
 
 create_schema(f"{CATALOG_NAME}.{SILVER_SCHEMA}")
 configure_silver_settings()
@@ -65,6 +64,8 @@ silver_cast = (bronze_cast
         "show_id",
         col("person.id").alias("person_id"),
         col("person.name").alias("person_name"),
+        #concat_ws("_",col("person.id").cast("string"),col("person.name")).alias("person_uid"),
+        # schema enforcement add this line when testing
         col("person.gender").alias("gender"),
         col("person.country.name").alias("country"),
         col("person.birthday").alias("birthday"),
@@ -118,6 +119,10 @@ fact_show_data = (
     .partitionBy("airdate_year")
     .saveAsTable(FACT_SHOW_DATA_TABLE)
 )
+
+optimize_table(FACT_SHOW_DATA_TABLE)
+
+print("Silver Layer Created")
 
 optimize_table(FACT_SHOW_DATA_TABLE)
 
