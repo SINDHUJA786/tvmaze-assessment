@@ -1,5 +1,3 @@
-# Databricks notebook source
-# DBTITLE 1,Cell 1
 import json
 import requests
 from pyspark.sql.functions import (current_timestamp,col,regexp_extract)
@@ -91,7 +89,11 @@ def build_avg_runtime_per_show(episodes_df,shows_df):
 
 def build_top_cast_members(df):
     cast_window = Window.orderBy(desc("show_count"))
-    return (df.groupBy("person_id","person_name").agg(countDistinct("show_id").alias("show_count")).withColumn("cast_rank",dense_rank().over(cast_window)))
+    # schema enforcement comment this after doing schema enforcement
+    return (df.groupBy("person_id","person_name").agg(countDistinct("show_id").alias("show_count")).withColumn("cast_rank",
+    dense_rank().over(cast_window)))
+    #return (df.groupBy("person_id","person_name","person_uid").agg(countDistinct("show_id").alias("show_count")).withColumn("cast_rank",dense_rank().over(cast_window)))
+    # schema enforcement add this line when testing
 
 def build_most_common_genres(df):
     genre_window = Window.orderBy(desc("show_count"))
